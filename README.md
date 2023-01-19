@@ -138,6 +138,40 @@ console.log((1 && null && 2) > 0);
 console.log(null || (2 && 3) || 4);
 ```
 
+```js
+console.log(1 && 5);
+console.log(5 && 1);
+console.log(0 && 2);
+console.log(2 && 0);
+console.log('' && 'Mango');
+console.log('Mango' && '');
+console.log('Mango' && 'Poly');
+console.log('Poly' && 'Mango');
+```
+
+```js
+console.log(true || false);
+console.log(false || true);
+console.log(true || true);
+
+console.log(3 || false);
+console.log(false || 3);
+console.log(3 || true);
+console.log(true || 3);
+```
+
+```js
+console.log(!true);
+console.log(!false);
+console.log(!3);
+console.log(!'Mango');
+console.log(!0);
+console.log(!'');
+
+const isOnline = true;
+const isNotOnline = !isOnline;
+```
+
 ## Example 9 - Значение по умолчанию и оператор нулевого слияния
 
 Отрефактори код так, чтобы в переменную `value` присваивалось значение
@@ -174,3 +208,10 @@ const doubleDigitHours = String(hours).padStart(2, 0);
 const doubleDigitMinutes = String(minutes).padStart(2, 0);
 console.log(`${doubleDigitHours}:${doubleDigitMinutes}`);
 ```
+
+---
+
+## CodeWars
+
+- [Kata 1](https://www.codewars.com/kata/5a3fe3dde1ce0e8ed6000097)
+- [Kata 2](https://www.codewars.com/kata/5748838ce2fab90b86001b1a)
