@@ -1,0 +1,16 @@
+# Codewars
+
+1. [](https://www.codewars.com/kata/57a0e5c372292dd76d000d7e)
+1. [](https://www.codewars.com/kata/5777fe3f355edbf0a5000d11)
+1. [](https://www.codewars.com/kata/51e0007c1f9378fa810002a9)
+1. [](https://habr.com/ru/post/275813/)
+1. [](https://www.codewars.com/kata/5a036ecb2b651d696f00007c)
+1. [](https://www.codewars.com/kata/5b4e779c578c6a898e0005c5)
+1. [](https://www.codewars.com/kata/5a1c28f9c9fc0ef2e900013b)
+1. [](https://www.codewars.com/kata/5722cc50785220ac8b00129b)
+1. [](https://www.codewars.com/kata/5937ae46377144bb2f000029)
+1. [](https://www.codewars.com/kata/563b662a59afc2b5120000c6)
+1. [Сортування 2-мірного масиву]()
+1. [Ркурсія Фібоначі]()
+1. [Рекурсія степінь]()
+1. [Рекурсія факторіал]()
