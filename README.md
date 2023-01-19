@@ -98,13 +98,6 @@ console.log(
 
 ```js
 // Решение
-function getStockReport({ companyName, stock }) {
-  let total = 0;
-  for (const value of Object.values(stock)) {
-    total += value;
-  }
-  return `${companyName} has ${total} items in stock`;
-}
 
 console.log(
   getStockReport({
@@ -135,16 +128,6 @@ console.log(
 значением "default" если в `partialContact` нет такого свойства.
 
 ```js
-// Решение
-function createContact(partialContact) {
-  return {
-    list: 'default',
-    ...partialContact,
-    id: generateId(),
-    createdAt: Date.now(),
-  };
-}
-
 console.log(
   createContact({
     name: 'Mango',
@@ -170,14 +153,6 @@ function generateId() {
 со свойством `fullName`, вместо `firstName` и `lastName`.
 
 ```js
-// Решение
-function transformUsername({ firstName, lastName, ...otherProps }) {
-  return {
-    fullName: `${firstName} ${lastName}`,
-    ...otherProps,
-  };
-}
-
 console.log(
   transformId({
     id: 1,
@@ -198,3 +173,56 @@ console.log(
   }),
 );
 ```
+
+---
+
+# [Задачки №1](https://the-evening-code.com/posts/ten-javascript-exercises-with-objects)
+
+- ```js
+  // Напишите функцию, которая возвращает вложенный массив вида [[key, value], [key, value]]
+  ```
+
+- ```js
+  // Напишите функцию, которая возвращает новый объект без указанных значений.
+  ```
+
+- ```js
+  // Напишите функцию, которая делает поверхностную проверку объекта на пустоту.
+  ```
+
+- ```js
+  // Напишите функцию, которая поверхностно сравнивает два объекта.
+  ```
+
+- ```js
+  // Напишите функцию, которая вызывает метод массива на заданный путь объекта.
+  ```
+
+- ```js
+  // Напишите функцию, которая вызывает метод массива на заданный путь объекта.
+  ```
+
+- ```js
+  // Напишите функцию, которая поверхностно находит пересечения объектов и возвращает объект пересечений.
+  ```
+
+---
+
+```js
+// Функция, сливающая массивы в двухмерный
+// Функция, сливающая массивы в один
+```
+
+---
+
+# Codewars
+
+1. [Kata Series](https://www.codewars.com/kata/572ab0cfa3af384df7000ff8)
+1. [Kata](https://www.codewars.com/kata/55a1528cca4a6d4c5a0000e3/train/javascript)
+1. [Kata](https://www.codewars.com/kata/5983cba828b2f1fd55000114)
+1. [Kata](https://www.codewars.com/kata/5848565e273af816fb000449)
+1. [Kata](https://www.codewars.com/kata/581e014b55f2c52bb00000f8)
+1. [Kata](https://www.codewars.com/kata/59df2f8f08c6cec835000012)
+1. [Kata](https://www.codewars.com/kata/5514e5b77e6b2f38e0000ca9)
+1. [Kata](https://www.codewars.com/kata/5783ef69202c0ee4cb000265)
+1. [Kata](https://www.codewars.com/kata/60cc93db4ab0ae0026761232)
