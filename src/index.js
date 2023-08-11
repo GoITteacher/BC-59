@@ -121,24 +121,23 @@
 */
 
 // 5 .
-//
-const langs = ['python', 'javascript', 'c++', 'haskel', 'php', 'ruby'];
-//
+//               |
+// const langs = ['python', 'javascript', 'c++', 'haskel', 'php', 'ruby'];
+//                                                               |
 
-let counter = 0;
-for (let i = 0; i < langs.length - 1; i += 1) {
-  for (let j = i; j < langs.length; j += 1) {
-    counter += 1;
-    if (langs[i] > langs[j]) {
-      const temp = langs[j];
-      langs[j] = langs[i];
-      langs[i] = temp;
-    }
-  }
-}
+// let counter = 0;
+// for (let i = 0; i < langs.length - 1; i += 1) {
+//   for (let j = i; j < langs.length; j += 1) {
+//     if (langs[i] > langs[j]) {
+//       const temp = langs[j];
+//       langs[j] = langs[i];
+//       langs[i] = temp;
+//     }
+//   }
+// }
 
 // console.log(counter);
-console.log(langs);
+// console.log(langs);
 
 // const arr1 = [2, 1, 3];
 // const temp = arr[0]; // 1
@@ -167,12 +166,85 @@ console.log(arr[2][0]); */
 
 // ============================
 
-const numbers = [2, 17, 94, 1, 23, 37];
-let min = numbers[0];
+// const numbers = [2, 17, 94, 1, 23, 37];
+// let min = numbers[0];
 
-for (let i = 0; i < numbers.length; i++) {
-  if (numbers[i] < min) {
-    min = numbers[i];
-  }
+// for (let i = 0; i < numbers.length; i++) {
+//   if (numbers[i] < min) {
+//     min = numbers[i];
+//   }
+// }
+// console.log(min);
+// =============================
+// .      0            1 .       2
+
+// const arr = ['Telescopes', 'Cba', 'Glasses', 'Eyes', 'Monocles', 'Abcsefse'];
+// for (let i = 0; i < arr.length; i += 1) {
+//   for (let j = i; j < arr.length; j += 1) {
+//     if (arr[j].length < arr[i].length) {
+//       const temp = arr[i];
+//       arr[i] = arr[j];
+//       arr[j] = temp;
+//     }
+//   }
+// }
+
+// console.log(arr);
+// ===================================
+
+// const arr = [3, 5, 8, 98, 2, 1, 4, 6, 7];
+// const arrCopy = Array.from(arr);
+// const min = arrCopy.indexOf(Math.min(...arrCopy)); //3
+// arrCopy.splice(min, 1);
+// console.log(arrCopy);
+
+// ===================================
+
+// const min = 3;
+// const max = 20;
+// let count = 0;
+// for (let i = min; i <= max; i += 1) {
+//   if (!i.toString().includes('5')) {
+//     count += 1;
+//     console.log(i);
+//   }
+// }
+// console.log(count);
+
+// ===================================
+
+// const arr = [1, 2, 3, 4, 5, 6, 10];
+// for (let i = 1; i < arr.length; i += 1) {
+//   if (arr[i] !== arr[i - 1] + 1) {
+//     for(let j = 0;j<10-6;j++){
+//         console.log(arr[i - 1] + j + 1);
+//     }
+//     console.log(arr[i - 1] + 1);
+//   }
+// }
+
+// ==================================
+
+const arr = [
+  1,
+  4,
+  'awd',
+  2,
+  5,
+  'sefsef',
+  4,
+  'drg',
+  2,
+  3,
+  'ssefsef',
+  2,
+  'awd',
+  3,
+];
+
+for (let i = 0; i < arr.length - 1; i++) {
+  const isNumber = typeof arr[i] === 'number';
+  const isString = typeof arr[i + 1] === 'string';
+  const isLength = arr[i] > arr[i + 1].length;
+  console.log(isNumber && isString && isLength);
 }
-console.log(min);
