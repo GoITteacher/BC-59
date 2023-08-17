@@ -179,10 +179,6 @@ console.log(
 # [Задачки №1](https://the-evening-code.com/posts/ten-javascript-exercises-with-objects)
 
 - ```js
-  // Напишите функцию, которая возвращает вложенный массив вида [[key, value], [key, value]]
-  ```
-
-- ```js
   // Напишите функцию, которая возвращает новый объект без указанных значений.
   ```
 
