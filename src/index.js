@@ -1,9 +1,15 @@
 /* 
 Колбек функція повинна приймати один параметр та виводити його до консолі 
 */
-function globalCallBack(data) {
-  console.log(`Result - `, data);
-}
+// function globalCallBack(data) {
+//   console.log(`Result - `, data);
+// }
+
+// function globalCallBack(data) {
+//   data.forEach(el => {
+//     console.log(el);
+//   });
+// }
 /* Сума чисел: Напишіть функцію sumArray(numbers, callback), яка приймає масив чисел numbers та колбек callback. Функція повинна обчислити суму чисел у масиві та передати результат у колбек.
  */
 
@@ -136,7 +142,7 @@ const concatStrings = (strings, separator, callback) => {
   callback(sumStrings);
 };
 
-concatStrings(['lggjf', 'solo', 'olef'], '-', globalCallBack);
+// concatStrings(['lggjf', 'solo', 'olef'], '-', globalCallBack);
 
 /* 
 Перетворення в числа: Напишіть функцію parseNumbers(strings, callback), яка приймає масив рядків strings та колбек callback. Функція повинна перетворити кожен рядок з масиву на число і передати новий масив чисел в колбек.
@@ -149,17 +155,82 @@ const parseNumbers = (strings, callback) => {
   callback(stringsArr);
 };
 
-parseNumbers(['22', '33', '12', '1', '2', '5'], globalCallBack);
+// parseNumbers(['22', '33', '12', '1', '2', '5'], globalCallBack);
 /* 
 Підрахунок символів: Напишіть функцію countCharacters(strings, callback), яка приймає масив рядків strings та колбек callback. Функція повинна підрахувати загальну кількість символів у всіх рядках масиву та передати результат у колбек.
 */
 
+/* function countCharacters(strings, callback) {
+  //   let total = 0;
+  //   strings.forEach((el, idx, arr) => {
+  //     total += el.length;
+  //   });
+  let total = strings.join('').length;
+  callback(total);
+} */
+
+// countCharacters(['Hello', 'Test'], globalCallBack);
+
 /* 
 Сортування чисел: Напишіть функцію sortNumbers(numbers, callback), яка приймає масив чисел numbers та колбек callback. Функція повинна відсортувати числа в масиві за зростанням та передати відсортований масив у колбек.
 */
+
+// function sortNumbers(numbers, callback) {
+//   for (i = 0; i < numbers.length; i += 1) {
+//     for (j = 0; j < numbers.length; j += 1) {
+//       if (numbers[i] <= numbers[j]) {
+//         let temp = numbers[i];
+//         numbers[i] = numbers[j];
+//         numbers[j] = temp;
+//       }
+//     }
+//   }
+//   callback(numbers);
+// }
+
+// sortNumbers(
+//   [1, 2, 4, 5, 6, 2, 2, 1, 3, 5, 1, 3, 5, 7, 2, 345, 56, 3, 23, 4546],
+//   globalCallBack,
+// );
+
 /* 
 https://www.codewars.com/kata/5848565e273af816fb000449
 */
+/* 
+Your message is a string containing space separated words.
+You need to encrypt each word in the message using the following rules:
+The first letter must be converted to its ASCII code.
+The second letter must be switched with the last letter
+
+
+
+encryptThis("Hello") === "72olle"
+encryptThis("good") === "103doo"
+encryptThis("hello world") === "104olle 119drlo"
+*/
+
+const encryptThis = string => {
+  // 'Hello world' ['Hello', world]
+  const arrString = string.split(' ');
+  let encryptArr = [];
+  for (let word of arrString) {
+    encryptArr.push(encryptWord(word));
+  }
+  return encryptArr.join(' ');
+};
+
+encryptThis('Hello world, wellcome back to codding challange');
+
+function encryptWord(word) {
+  word = word.split('');
+  const leterSwap = word[1];
+  word[1] = word[word.length - 1];
+  word[word.length - 1] = leterSwap;
+
+  word[0] = word[0].charCodeAt();
+  word = word.join('');
+  return word;
+}
 
 /* 
 https://www.codewars.com/kata/581e014b55f2c52bb00000f8
@@ -174,3 +245,22 @@ https://www.codewars.com/kata/60cc93db4ab0ae0026761232
 */
 
 // ==========================================
+
+//'Hello'.charCodeAt(3) => 112
+// word = word.charCodeAt(0) + word.slice(1)
+
+// ========================
+
+const arr = [55, 22, 41, 5, 6];
+
+const copy = [...arr, ...arr];
+console.log(copy);
+
+const [x, y, ...rest] = arr;
+console.log(x, y, rest);
+
+function foo([x, y, ...rest]) {
+  console.log(rest);
+}
+
+foo(arr);
