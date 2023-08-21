@@ -1,5 +1,150 @@
-const cars = [
-  {
+function task1(cars) {
+  const task_1 = cars.filter(el => el.price > 25000);
+  console.log(task_1);
+}
+function task2(cars) {
+  const task_2 = cars.filter(({ color }) => color === 'Green');
+  console.log(task_2);
+}
+
+const task3 = cars => {
+  const allSportsCars = cars.filter(({ isSportCar }) => isSportCar);
+  console.log(allSportsCars);
+};
+const task4 = cars => {
+  const task_4 = cars.filter(({ year }) => year === 2022).length;
+  console.log(task_4);
+};
+
+const task5 = cars => {
+  const task_5 = [...cars].sort((a, b) => {
+    if (a.price === b.price) {
+      return a.amount - b.amount;
+    } else {
+      return a.price - b.price;
+    }
+  });
+  console.table(task_5);
+};
+
+const task6 = cars => {
+  const task_6 = [...cars].sort((a, b) => a.year - b.year);
+  console.table(task_6);
+};
+
+/* 
+Найти самую дорогую машину.
+Найти все машины заданной марки (например, Toyota).
+Посчитать общее количество машин всех типов.
+Найти все машины определенного цвета и года выпуска.
+Посчитать среднюю цену всех машин.
+Найти все машины, у которых количество на складе больше 0.
+Найти все машины с ценой меньше 30000 и годом выпуска после 2020.
+Посчитать суммарное количество всех машин заданной марки.
+Отсортировать машины по количеству на складе (от наибольшего к наименьшему).
+*/
+
+const task7 = cars => {
+  const task7Result = cars.reduce((maxCar, currentCar, index, array) => {
+    if (maxCar.price > currentCar.price) return maxCar;
+    else {
+      return currentCar;
+    }
+  });
+  console.log(task7Result);
+};
+
+const task8 = cars => {
+  const task_8 = cars.filter(el => el.brand === 'Toyota');
+  console.log(task_8);
+};
+
+const task9 = cars => {
+  const task_9 = cars.reduce((acc, el) => acc + el.amount, 0);
+  console.log(task_9);
+};
+// task9(cars);
+
+/* 
+Отсортировать машины по цене (от самой дешевой до самой дорогой).
+Найти все машины определенного типа (например, SUV).
+*/
+
+/* 
+Найти все машины определенного цвета и года выпуска.
+Посчитать среднюю цену всех машин.
+Найти все машины, у которых количество на складе больше 0.
+Найти все машины с ценой меньше 30000 и годом выпуска после 2020.
+Посчитать суммарное количество всех машин заданной марки.
+Отсортировать машины по количеству на складе (от наибольшего к наименьшему).
+*/
+
+const task10 = cars => {
+  const task_10 = [...cars].sort((a, b) => a.brand.localeCompare(b.brand));
+  console.table(task_10);
+};
+
+const task11 = cars => {
+  const task_11 = cars.filter(el => el.type === 'SUV');
+  console.log(task_11);
+};
+const task12 = (cars, color, year) => {
+  const task_12 = cars.filter(el => {
+    return el.color === color && el.year === year;
+  });
+  console.log(task_12);
+};
+
+const task_13 = cars => {
+  const total = cars.reduce((acc, el) => {
+    return acc + el.price;
+  }, 0);
+  console.log(total / cars.length);
+};
+
+/* 
+Найти все машины, у которых количество на складе больше 0.
+Найти все машины с ценой меньше 30000 и годом выпуска после 2020.
+*/
+
+/*
+Знайти цсі авто 2022 року та вивести масив лише марок цих автомобілів 
+ */
+
+// const task17 = cars => cars.filter(el => el.year === 2022).map(el => el.model);
+
+// console.log(task17(cars));
+
+// const task18 = cars => {
+//   const task_18 = cars.some(el => {
+//     console.log(el);
+//     return el.year === 2021;
+//   });
+//   console.log(task_18);
+// };
+// task18(cars);
+// const task14 = cars => {
+//   const task_14 = cars.filter((el, idx, arr) => {
+//     return el.amount > 3;
+//   });
+//   console.log(task_14);
+// };
+
+// const task15 = cars => {
+//   const task = cars.filter((el, idx, arr) => {
+//     return el.price < 30000 && el.year > 2020;
+//   });
+//   console.log(task);
+// };
+
+// const task16 = cars => {
+//   const task_16 = cars.every(el => el.price > 100000);
+//   console.log(task_16);
+// };
+// task16(cars);
+
+/* 
+{
     brand: 'Toyota',
     model: 'Camry',
     year: 2019,
@@ -8,195 +153,15 @@ const cars = [
     amount: 3,
     isSportCar: false,
     type: 'Sedan',
-  },
-  {
-    brand: 'Honda',
-    model: 'Accord',
-    year: 2020,
-    color: 'White',
-    price: 28000,
-    amount: 5,
-    isSportCar: false,
-    type: 'Sedan',
-  },
-  {
-    brand: 'Ford',
-    model: 'Mustang',
-    year: 2021,
-    color: 'Red',
-    price: 50000,
-    amount: 2,
-    isSportCar: true,
-    type: 'Coupe',
-  },
-  {
-    brand: 'Chevrolet',
-    model: 'Camaro',
-    year: 2018,
-    color: 'Black',
-    price: 45000,
-    amount: 1,
-    isSportCar: true,
-    type: 'Coupe',
-  },
-  {
-    brand: 'BMW',
-    model: 'M5',
-    year: 2022,
-    color: 'Blue',
-    price: 70000,
-    amount: 2,
-    isSportCar: true,
-    type: 'Sedan',
-  },
-  {
-    brand: 'Mercedes-Benz',
-    model: 'E-Class',
-    year: 2020,
-    color: 'Silver',
-    price: 60000,
-    amount: 3,
-    isSportCar: false,
-    type: 'Sedan',
-  },
-  {
-    brand: 'Audi',
-    model: 'A4',
-    year: 2021,
-    color: 'Gray',
-    price: 45000,
-    amount: 4,
-    isSportCar: false,
-    type: 'Sedan',
-  },
-  {
-    brand: 'Lamborghini',
-    model: 'Huracan',
-    year: 2023,
-    color: 'Yellow',
-    price: 300000,
-    amount: 1,
-    isSportCar: true,
-    type: 'Coupe',
-  },
-  {
-    brand: 'Ferrari',
-    model: '488 GTB',
-    year: 2022,
-    color: 'Red',
-    price: 350000,
-    amount: 1,
-    isSportCar: true,
-    type: 'Coupe',
-  },
-  {
-    brand: 'Porsche',
-    model: '911',
-    year: 2021,
-    color: 'White',
-    price: 120000,
-    amount: 2,
-    isSportCar: true,
-    type: 'Coupe',
-  },
-  {
-    brand: 'Volkswagen',
-    model: 'Golf',
-    year: 2020,
-    color: 'Black',
-    price: 20000,
-    amount: 6,
-    isSportCar: false,
-    type: 'Hatchback',
-  },
-  {
-    brand: 'Subaru',
-    model: 'Forester',
-    year: 2021,
-    color: 'Green',
-    price: 30000,
-    amount: 3,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Jeep',
-    model: 'Wrangler',
-    year: 2022,
-    color: 'Orange',
-    price: 35000,
-    amount: 2,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Mazda',
-    model: 'CX-5',
-    year: 2020,
-    color: 'Red',
-    price: 28000,
-    amount: 5,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Kia',
-    model: 'Soul',
-    year: 2021,
-    color: 'Yellow',
-    price: 20000,
-    amount: 4,
-    isSportCar: false,
-    type: 'Hatchback',
-  },
-  {
-    brand: 'Hyundai',
-    model: 'Tucson',
-    year: 2022,
-    color: 'White',
-    price: 30000,
-    amount: 3,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Nissan',
-    model: 'Sentra',
-    year: 2019,
-    color: 'Silver',
-    price: 22000,
-    amount: 3,
-    isSportCar: false,
-    type: 'Sedan',
-  },
-  {
-    brand: 'Volvo',
-    model: 'XC60',
-    year: 2020,
-    color: 'Blue',
-    price: 40000,
-    amount: 2,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Lexus',
-    model: 'RX',
-    year: 2021,
-    color: 'Black',
-    price: 50000,
-    amount: 2,
-    isSportCar: false,
-    type: 'SUV',
-  },
-  {
-    brand: 'Land Rover',
-    model: 'Range Rover Evoque',
-    year: 2022,
-    color: 'Gray',
-    price: 60000,
-    amount: 1,
-    isSportCar: false,
-    type: 'SUV',
-  },
-];
+  }
+*/
+/* 
+{
+    firstName: 'Alice',
+    lastName: 'Johnson',
+    age: 28,
+    email: 'alice@example.com',
+    isActive: true,
+    gender: 'Female',
+  }
+ */

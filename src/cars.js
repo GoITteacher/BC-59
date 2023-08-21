@@ -100,7 +100,7 @@ const cars = [
     type: 'Coupe',
   },
   {
-    brand: 'Volkswagen',
+    brand: 'Toyota',
     model: 'Golf',
     year: 2020,
     color: 'Black',
@@ -150,7 +150,7 @@ const cars = [
     type: 'Hatchback',
   },
   {
-    brand: 'Hyundai',
+    brand: 'Toyota',
     model: 'Tucson',
     year: 2022,
     color: 'White',
