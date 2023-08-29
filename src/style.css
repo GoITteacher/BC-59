@@ -88,12 +88,17 @@ li {
   max-width: 300px;
   overflow-x: hidden;
   margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .list {
   height: 90%;
   overflow-y: auto;
   justify-content: start;
+  width: 30vw;
 }
 
 .list > * {
