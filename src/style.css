@@ -55,8 +55,8 @@ td {
   border-radius: 15px;
   margin: 20px;
   border: 1px solid black;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); */
   background: #ffffff40;
   border-radius: 10px;
   /* box-shadow: 0 8px 32px #231f1f5e; */

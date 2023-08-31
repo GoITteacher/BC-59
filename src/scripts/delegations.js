@@ -2,6 +2,7 @@ import { users, albums, photos } from './data';
 
 const refs = {
   userListEl: document.querySelector('.js-user-list'),
+  formEl: document.querySelector('.js-header-form'),
 };
 
 const userListRender = users => {
@@ -83,3 +84,12 @@ refs.userListEl.addEventListener('click', event => {
   const instance = basicLightbox.create(markup);
   instance.show();
 });
+
+refs.formEl.addEventListener('submit', onFormElSubmit);
+
+function onFormElSubmit(event) {
+  event.preventDefault();
+  const inputValue = event.target.elements.username.value.trim();
+  const filteredUsers = users.filter(el => el.name.includes(inputValue));
+  userListRender(filteredUsers);
+}
