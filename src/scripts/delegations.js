@@ -24,14 +24,23 @@ function renderUserList(userList) {
 }
 renderUserList(users);
 
-refs.inputElement.addEventListener('input', event => {
+function onInputChange(event) {
   const userValue = event.target.value;
 
   const filterUsers = users.filter(user => {
     return user.name.includes(userValue);
   });
   renderUserList(filterUsers);
-});
+}
+const copyFun = _.debounce(onInputChange, 300);
+refs.inputElement.addEventListener('input', copyFun);
+
+refs.inputElement.addEventListener(
+  'input',
+  _.debounce(() => {
+    console.log(123);
+  }, 300),
+);
 
 // =================
 
@@ -74,17 +83,22 @@ function onAlbumListElClick(event) {
   if (event.target === event.currentTarget) return;
 
   const albumId = event.target.dataset.id;
+  const filteredPhotos = photos.filter(el => el.albumId === +albumId);
 
-  const album = albums.find(el => {
-    return el.id === +albumId;
-  });
+  if (event.shiftKey) {
+    const album = albums.find(el => {
+      return el.id === +albumId;
+    });
 
-  const user = users.find(el => {
-    return el.id === album.userId;
-  });
+    const user = users.find(el => {
+      return el.id === album.userId;
+    });
 
-  renderModal(user);
-  showModal();
+    renderModal(user, filteredPhotos);
+    showModal();
+  } else {
+    renderPhotoMarkup(filteredPhotos);
+  }
 }
 refs.backdropEl.addEventListener('click', onBackdropElClick);
 function onBackdropElClick(event) {
@@ -93,6 +107,12 @@ function onBackdropElClick(event) {
 }
 
 function renderModal(user, photosArr) {
+  const photoMarkup = photosArr
+    .map(el => {
+      return `<img loading="lazy" src="https://source.unsplash.com/500x500/?random=${el.id}&user,car,bird,cat,dog"/>`;
+    })
+    .join('');
+
   const markup = `
   <div class="modalka">
   <h2>${user.name}</h2>
@@ -105,8 +125,38 @@ function renderModal(user, photosArr) {
   <hr />
   Company: ${user.company.name}
   <hr />
-  <div class="fb fb-v list js-modal-list"></div>
+  <div class="fb fb-v list js-modal-list">
+  ${photoMarkup}
+  </div>
   </div>`;
 
   refs.backdropEl.innerHTML = markup;
+}
+
+function photosMarkup(photos) {
+  const photoMarkup = photos
+    .map(element => {
+      return `<img class="lazyload blur-up" src="https://upload.wikimedia.org/wikipedia/ru/7/77/Pikachu.png" data-src="https://source.unsplash.com/500x500/?random=${element.id}&user,car,bird,cat,dog"/>`;
+    })
+    .join('\n');
+  return photoMarkup;
+}
+
+function renderPhotoMarkup(photos) {
+  const markup = photosMarkup(photos);
+  refs.photoListEl.innerHTML = markup;
+}
+
+// ===============================
+
+const copy = _.debounce(onMouseMove, 2000, {
+  leading: true,
+  trailing: true,
+  maxWait: 5000,
+});
+
+refs.albumListEl.addEventListener('mousemove', copy);
+
+function onMouseMove(e) {
+  console.log(e.clientX, e.clientY);
 }

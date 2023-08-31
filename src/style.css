@@ -121,6 +121,7 @@ li {
 
 .blur-up {
   -webkit-filter: blur(5px);
+  border: 5px solid red;
   filter: blur(5px);
   transition: filter 400ms, -webkit-filter 400ms;
 }
@@ -128,4 +129,5 @@ li {
 .blur-up.lazyloaded {
   -webkit-filter: blur(0);
   filter: blur(0);
+  border: none;
 }
