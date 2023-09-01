@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /js-example/",
     "push": "git add . && git commit -m 'update' && git push"
   },
@@ -17,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/GoITteacher/js-template-practic/issues"
   },
-  "homepage": "https://github.com/GoITteacher/js-template-practic#readme",
-  "dependencies": {
-    "parcel": "^2.9.3"
-  }
+  "homepage": "https://github.com/GoITteacher/js-template-practic#readme"
 }
