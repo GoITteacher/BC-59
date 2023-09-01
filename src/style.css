@@ -76,6 +76,7 @@ td {
 
 .fb-h {
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .h100 {
@@ -120,6 +121,7 @@ li {
   justify-content: start;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 50%;
   justify-content: center;
 }
 

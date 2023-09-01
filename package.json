@@ -20,5 +20,9 @@
   "homepage": "https://github.com/GoITteacher/js-template-practic#readme",
   "devDependencies": {
     "parcel": "^2.9.3"
+  },
+  "dependencies": {
+    "basiclightbox": "^5.0.4",
+    "simplelightbox": "^2.14.2"
   }
 }
