@@ -192,8 +192,3 @@ li {
 .user-website a:hover {
   text-decoration: underline;
 }
-
-.blur-up.lazyloaded {
-  -webkit-filter: blur(0);
-  filter: blur(0);
-}
