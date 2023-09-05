@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /js-example/",
+    "start": "parcel src/pages/index.html",
+    "build": "parcel build src/pages/index.html --public-url /js-example/",
     "push": "git add . && git commit -m 'update' && git push"
   },
   "repository": {
