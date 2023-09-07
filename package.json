@@ -17,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/GoITteacher/js-template-practic/issues"
   },
-  "homepage": "https://github.com/GoITteacher/js-template-practic#readme"
+  "homepage": "https://github.com/GoITteacher/js-template-practic#readme",
+  "devDependencies": {
+    "parcel": "^2.9.3",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "parcel-transformer-hbs": "^1.0.4"
+  },
+  "dependencies": {
+    "posthtml-include": "^1.7.4"
+  }
 }
