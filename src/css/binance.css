@@ -1,3 +1,9 @@
 .binance-block {
-  padding: 0 0 0 20px;
+  margin: 0 0 0 20px;
+  padding: 5px;
+  border: 1px solid black;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
 }
