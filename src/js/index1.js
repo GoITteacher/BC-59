@@ -1,51 +1,52 @@
 import { NewsApi } from './modules/newsAPI';
-
 const refs = {
-  formElem: document.querySelector('.js-search-form'),
-  articleListElem: document.querySelector('.js-article-list'),
-  btnLoad: document.querySelector('.js-btn-load'),
+  formEl: document.querySelector('.js-search-form'),
+  listEl: document.querySelector('.js-article-list'),
+  nextPageBtn: document.querySelector('.js-btn-load'),
 };
+
+refs.formEl.addEventListener('submit', onFormElSubmit);
+
 const newsApi = new NewsApi();
-
-refs.formElem.addEventListener('submit', e => {
-  e.preventDefault();
+function onFormElSubmit(event) {
+  event.preventDefault();
+  newsApi.q = event.target.elements.query.value.trim();
   newsApi.page = 1;
-  refs.articleListElem.innerHTML = '';
-  const query = e.target.elements.query.value;
-  newsApi.getNews(query).then(data => {
-    renderArticles(data.articles);
-    if (data.total_pages > data.page) {
-      refs.btnLoad.disabled = false;
-    }
-  });
-});
 
-refs.btnLoad.addEventListener('click', e => {
-  newsApi.page++;
-  newsApi.getNews().then(data => {
-    renderArticles(data.articles);
-    if (data.total_pages <= data.page) {
-      refs.btnLoad.disabled = true;
-    }
+  newsApi.fetchArticles().then(articles => {
+    refs.listEl.innerHTML = '';
+    renderArticles(articles);
+    refs.nextPageBtn.disabled = false;
   });
-});
-
-function renderArticles(articles) {
-  refs.articleListElem.innerHTML += createMurkupArticles(articles);
 }
 
-function createMurkupArticles(articles) {
-  return articles
-    .map(({ author, summary, title, media }) => {
-      return `
-            <li class="card news-card">
-                <img src="${media}" alt="" loading="lazy">
-                <h3>${title}</h3>
-                <p>${summary}</p>
-                <hr>
-                <span>${author}</span>
-            </li>
-        `;
-    })
-    .join('');
+const renderArticles = articles => {
+  const markup = articles
+    .map(
+      el => `<li class="card news-card">
+      <div class="news-image">
+      <img src="${el.media}" alt="" loading="lazy">
+      </div>
+      
+      <h3 class="card-title">${el.title}</h3>
+      <p class="card-desc">${el.summary}</p>
+      <div class="card-footer">
+        <span>${el.author}</span>
+        <span>${el.author}</span>
+      </div>
+      
+  </li>`,
+    )
+    .join('\n');
+
+  refs.listEl.insertAdjacentHTML('beforeend', markup);
+};
+
+function onNextBtnClick(event) {
+  newsApi.page += 1;
+  newsApi.fetchArticles().then(articles => {
+    renderArticles(articles);
+  });
 }
+
+refs.nextPageBtn.addEventListener('click', onNextBtnClick);

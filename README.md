@@ -1,7 +1,10 @@
 ```js
 `
 <li class="card news-card">
+    <div class="news-image">
     <img src="${media}" alt="" loading="lazy">
+    </div>
+    
     <h3>${title}</h3>
     <p>${summary}</p>
     <hr>

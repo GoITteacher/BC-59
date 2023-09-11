@@ -9,16 +9,22 @@ const options = {
 };
 
 export class NewsApi {
-  query = '';
-  page = 1;
-  constructor() {}
+  constructor() {
+    this.q = '';
+    this.page = 1;
+  }
 
-  getNews(query) {
-    if (query) this.query = query;
+  fetchArticles() {
+    const PARAMS = new URLSearchParams({
+      q: this.q,
+      page: this.page,
+      page_size: 20,
+    });
 
-    return fetch(
-      `${BASE_URL}${END_POINT}?q=${this.query}&page=${this.page}`,
-      options,
-    ).then(response => response.json());
+    return fetch(`${BASE_URL}${END_POINT}?${PARAMS}`, options)
+      .then(response => response.json())
+      .then(data => {
+        return data.articles;
+      });
   }
 }
