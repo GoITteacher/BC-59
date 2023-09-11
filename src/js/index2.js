@@ -27,13 +27,15 @@ function createMurkup(jobs) {
   return jobs
     .map(({ company_name, title, description }) => {
       return `
-            <li class="card news-card">
-            <h3>${title}</h3>
-            <hr>
-            ${description}
-            <hr>
-            <span>${company_name}</span>
-            </li>
+      <li class="card jobs-card">
+      <h3>${title}</h3>
+      <div class="jobs-body">
+      <hr>
+      ${description}
+      <hr>
+      <span>${company_name}</span>
+      </div>
+  </li>
         `;
     })
     .join('');
