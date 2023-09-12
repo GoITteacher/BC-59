@@ -2,71 +2,92 @@ import '../css/common.css';
 import { UsersAPI } from './modules/usersAPI';
 
 const refs = {
+  userListElem: document.querySelector('.js-user-list'),
   createUserForm: document.querySelector('.js-create-form'),
   updateUserForm: document.querySelector('.js-update-form'),
   resetUserForm: document.querySelector('.js-reset-form'),
-  userListElem: document.querySelector('.js-users-list'),
+  deleteUserForm: document.querySelector('.js-delete-form'),
 };
+// ============================================================
 
-const usersAPI = new UsersAPI();
+refs.createUserForm.addEventListener('submit', onUserCreate);
+refs.updateUserForm.addEventListener('submit', onUserUpdate);
+refs.resetUserForm.addEventListener('submit', onUserReset);
+// refs.deleteUserForm.addEventListener('submit', onUserDelete);
 
-const userTemplate = user => {
-  return `
-  <li data-sefsefsef="${user.id}" class="card articles">
-  <h4>${user.name}</h4>
-  <span>${user.phone}</span>
-</li>`;
-};
-
-const usersTemplate = users => {
-  return users.map(userTemplate).join('');
-};
-
-async function onLoadDocument() {
-  const users = await usersAPI.getUsers();
-  refs.userListElem.innerHTML = usersTemplate(users);
-}
-
-onLoadDocument();
-
-// =======================
-
-refs.createUserForm.addEventListener('submit', async e => {
+function onUserCreate(e) {
   e.preventDefault();
+  const form = e.target;
+  const { elements } = form;
 
   const user = {
-    name: e.target.elements.userName.value,
-    phone: e.target.elements.userPhone.value,
+    name: elements.userName.value,
+    phone: elements.userPhone.value,
+    email: elements.userEmail.value,
+    avatar: 'test',
   };
 
-  const createdUser = await usersAPI.createUser(user);
-  refs.userListElem.insertAdjacentHTML('beforeend', userTemplate(createdUser));
-});
+  UsersAPI.createUser(user).then(createdUser => {
+    const markup = userTemplate(createdUser);
+    refs.userListElem.insertAdjacentHTML('beforeend', markup);
+  });
 
-// =======================
+  form.reset();
+}
 
-refs.updateUserForm.addEventListener('submit', async e => {
+function onUserUpdate(e) {
   e.preventDefault();
 
   const user = {};
-  //   const { userName, userPhone, userId } = e.target.elements;
-  //   user.name = userName.value.trim() || undefined;
-  //   user.phone = userPhone.value.trim() || undefined;
-  //   user.id = userId.value.trim() || undefined;
-
   const formData = new FormData(e.target);
-
-  for (let [key, value] of formData.entries()) {
-    if (value.trim()) {
+  formData.forEach((value, key) => {
+    if (value) {
       key = key.replace('user', '').toLowerCase();
       user[key] = value;
     }
-  }
+  });
 
-  const updatedUser = await usersAPI.updateUser(user, user.id);
-  const userMarkup = userTemplate(updatedUser);
-  const oldUser = refs.userListElem.querySelector(`[data-id="${user.id}"]`);
-  oldUser.insertAdjacentHTML('afterend', userMarkup);
-  oldUser.remove();
-  e.target.reset();
-});
+  UsersAPI.updateUser(user).then(updatedUser => {
+    const markup = userTemplate(updatedUser);
+    const oldUser = refs.userListElem.querySelector(`li[data-id="${user.id}"]`);
+    oldUser.insertAdjacentHTML('afterend', markup);
+    oldUser.remove();
+  });
+}
+function onUserReset(e) {
+  e.preventDefault();
+
+  const user = {};
+  const formData = new FormData(e.target);
+  formData.forEach((value, key) => {
+    key = key.replace('user', '').toLowerCase();
+    user[key] = value;
+  });
+
+  UsersAPI.resetUser(user).then(updatedUser => {
+    const markup = userTemplate(updatedUser);
+    const oldUser = refs.userListElem.querySelector(`li[data-id="${user.id}"]`);
+    oldUser.insertAdjacentHTML('afterend', markup);
+    oldUser.remove();
+  });
+}
+function onUserDelete(e) {}
+
+// ============================================================
+
+UsersAPI.getUsers().then(renderUsers);
+
+function userTemplate({ name, email, phone, avatar, id }) {
+  const url = `https://source.unsplash.com/500x500/?random=${id}&avatar,user,man`;
+
+  return `<li class="card user-item" data-id=${id}>
+  <img src="${url}" alt="#" class="user-avatar" />
+  <h3>${name}</h3>
+  <p>${email}</p>
+  <p>${phone}</p>
+</li>`;
+}
+function renderUsers(userList) {
+  const markup = userList.map(userTemplate).join('');
+  refs.userListElem.innerHTML = markup;
+}

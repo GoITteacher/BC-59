@@ -1,22 +1,45 @@
-import axios from 'axios';
-const axios2 = axios.create({
-  baseURL: 'http://localhost:3000',
-  headers: {},
-});
-
 export class UsersAPI {
-  async getUsers() {
-    const response = await axios2.get('/users');
-    return response.data;
+  static #BASE_URL = 'http://localhost:3000';
+  static #END_POINT = '/users';
+  static getUsers() {
+    const url = `${UsersAPI.#BASE_URL}${UsersAPI.#END_POINT}`;
+    return fetch(url).then(res => res.json());
   }
+  static createUser(user) {
+    const url = `${this.#BASE_URL}${this.#END_POINT}`;
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-  async createUser(user) {
-    const response = await axios2.post('/users', user);
-    return response.data;
+    return fetch(url, options).then(res => res.json());
   }
-
-  async updateUser(user, userId) {
-    const response = await axios2.patch(`/users/${userId}`, user);
-    return response.data;
+  static updateUser({ id, ...user }) {
+    const url = `${this.#BASE_URL}${this.#END_POINT}/${id}`;
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return fetch(url, options).then(res => res.json());
   }
+  static resetUser({ id, ...user }) {
+    const url = `${this.#BASE_URL}${this.#END_POINT}/${id}`;
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return fetch(url, options).then(res => res.json());
+  }
+  static deleteUser(id) {}
 }
+
+UsersAPI.getUsers();
