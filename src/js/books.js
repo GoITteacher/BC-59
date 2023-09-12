@@ -1,119 +1,108 @@
-import '../css/common.css';
-import { BooksAPI } from './modules/booksAPI';
-// ===================================================
+import { BooksApi } from './modules/booksAPI';
 
 const refs = {
-  createFormElem: document.querySelector('.js-create-form'),
-  updateFormElem: document.querySelector('.js-update-form'),
-  resetFormElem: document.querySelector('.js-reset-form'),
-  deleteFormElem: document.querySelector('.js-delete-form'),
-  bookListElem: document.querySelector('.js-article-list'),
+  listEl: document.querySelector('.js-article-list'),
+  createFormEl: document.querySelector('.js-create-form'),
+  resetFormEl: document.querySelector('.js-reset-form'),
+  updateFormEl: document.querySelector('.js-update-form'),
+  deleteFormEl: document.querySelector('.js-delete-form'),
 };
-const booksAPI = new BooksAPI();
-// ===================================================
-refs.createFormElem.addEventListener('submit', onBookCreate);
-refs.updateFormElem.addEventListener('submit', onBookUpdate);
-refs.resetFormElem.addEventListener('submit', onBookReset);
-refs.deleteFormElem.addEventListener('submit', onBookDelete);
+const booksApi = new BooksApi();
+// =========================================
+refs.createFormEl.addEventListener('submit', onCreateFormSubmit);
+refs.resetFormEl.addEventListener('submit', onResetFormSubmit);
+refs.updateFormEl.addEventListener('submit', onUpdateFormSubmit);
+refs.deleteFormEl.addEventListener('submit', onDeleteFormSubmit);
 
-function onBookCreate(e) {
-  e.preventDefault();
-  const book = {};
-  const formData = new FormData(e.target);
-  formData.forEach((value, key) => {
-    key = key.replace('book', '').toLowerCase();
-    book[key] = value;
+function onCreateFormSubmit(event) {
+  event.preventDefault();
+
+  const { bookTitle, bookAuthor, bookDesc } = event.target.elements;
+
+  const title = bookTitle.value;
+  const author = bookAuthor.value;
+  const desc = bookDesc.value;
+
+  const book = {
+    title,
+    author,
+    desc,
+  };
+
+  booksApi.createBook(book).then(createdBook => {
+    const markup = templateBook(createdBook);
+    refs.listEl.insertAdjacentHTML('beforeend', markup);
   });
-
-  booksAPI
-    .createBook(book)
-    .then(createdBook => {
-      const markup = bookTemplate(createdBook);
-      refs.bookListElem.insertAdjacentHTML('beforeend', markup);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
-  e.target.reset();
+  event.target.reset();
 }
-function onBookUpdate(e) {
-  e.preventDefault();
+function onUpdateFormSubmit(event) {
+  event.preventDefault();
   const book = {};
-  const formData = new FormData(e.target);
+  const formData = new FormData(event.target);
 
   formData.forEach((value, key) => {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     key = key.replace('book', '').toLowerCase();
     book[key] = value;
   });
 
-  booksAPI
+  booksApi
     .updateBook(book)
-    .then(newBook => {
-      rerenderBook(newBook);
+    .then(book => {
+      const markup = templateBook(book);
+      const oldBookEl = refs.listEl.querySelector(`[data-id="${book.id}"]`);
+      oldBookEl.insertAdjacentHTML('beforebegin', markup);
+      oldBookEl.remove();
     })
-    .catch(err => {
-      console.log(err);
-    });
-  e.target.reset();
+    .catch(err => console.log(err));
 }
-function onBookReset(e) {
-  e.preventDefault();
+
+function onResetFormSubmit(event) {
+  event.preventDefault();
+
   const book = {};
-  const formData = new FormData(e.target);
+  const formData = new FormData(event.target);
+
   formData.forEach((value, key) => {
     key = key.replace('book', '').toLowerCase();
     book[key] = value;
   });
 
-  booksAPI
-    .resetBook(book)
-    .then(newBook => {
-      rerenderBook(newBook);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  e.target.reset();
-}
-function onBookDelete(e) {
-  e.preventDefault();
-  const id = e.target.elements.bookId.value;
-  booksAPI.deleteBook(id).then(() => {
-    const oldBook = refs.bookListElem.querySelector(`li[data-id="${id}"]`);
-    oldBook.remove();
+  booksApi.resetBook(book).then(newBook => {
+    const markup = templateBook(newBook);
+    const oldBookEl = refs.listEl.querySelector(`[data-id="${book.id}"]`);
+    oldBookEl.insertAdjacentHTML('afterend', markup);
+    oldBookEl.remove();
   });
-  e.target.reset();
 }
 
-// ===================================================
+function onDeleteFormSubmit(event) {
+  event.preventDefault();
+  const id = event.target.elements.bookId.value;
+  booksApi.deleteBook(id).then(() => {
+    const oldEl = refs.listEl.querySelector(`[data-id="${id}"]`);
+    oldEl.remove();
+  });
+}
 
-function bookTemplate({ author, desc, id, title }) {
+// =========================================
+function templateBook({ id, title, author, desc }) {
   return `<li class="card book-item" data-id="${id}">
-    <h4>${id} - ${title}</h4>
-    <p>${desc}</p>
-    <p>${author}</p>
+  <h4>${id} - ${title}</h4>
+  <p>${desc}</p>
+  <p>${author}</p>
 </li>`;
 }
 
-function rerenderBook(book) {
-  const oldBook = refs.bookListElem.querySelector(`li[data-id="${book.id}"]`);
-  const markup = bookTemplate(book);
-  oldBook.insertAdjacentHTML('afterend', markup);
-  oldBook.remove();
-}
-
 function renderBooks(books) {
-  const markup = books.map(bookTemplate).join('');
-  refs.bookListElem.innerHTML = markup;
+  const markUp = books.map(templateBook).join('');
+  refs.listEl.innerHTML = markUp;
 }
 
-// ===================================================
-function onLoadPage() {
-  booksAPI.getBooks().then(books => {
-    renderBooks(books);
-  });
-}
-onLoadPage();
-// ===================================================
+//===========================================
+
+booksApi.getBooks().then(books => {
+  renderBooks(books);
+});
