@@ -3,21 +3,20 @@ const refs = {
   infoEl: document.querySelector('.js-binance-info'),
 };
 
-refs.formEl.addEventListener('submit', e => {
+refs.formEl.addEventListener('submit', async e => {
   e.preventDefault();
 
   const value = e.target.elements.query.value.trim();
 
-  getPrice(value)
-    .then(data => {
-      renderPrice(data);
-    })
-    .catch(err => {
-      console.log('Don`t worry', err.message);
-    });
+  try {
+    const data = await getPrice(value);
+    renderPrice(data);
+  } catch (err) {
+    console.log('Don`t worry', err.message);
+  }
 });
 
-function getPrice(userValue) {
+async function getPrice(userValue) {
   const BASE_URL = 'https://binance43.p.rapidapi.com/ticker/price';
   const PARAMS = new URLSearchParams({
     symbol: userValue,
@@ -31,13 +30,16 @@ function getPrice(userValue) {
     },
   };
 
-  return fetch(url, options).then(res => {
+  await fetch(url, options);
+  try {
     if (!res.ok) {
       throw new Error('Error');
     } else {
       return res.json();
     }
-  });
+  } catch {
+    console.log('error');
+  }
 }
 
 function renderPrice({ symbol, price }) {

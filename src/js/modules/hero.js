@@ -3,19 +3,19 @@ const refs = {
   heroEl: document.querySelector('.js-hero-container'),
 };
 
-refs.formEl.addEventListener('submit', event => {
+refs.formEl.addEventListener('submit', async event => {
   event.preventDefault();
   const heroName = event.target.elements.query.value.trim();
-  searchHero(heroName)
-    .then(hero => {
-      renderHero(hero);
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+
+  try {
+    const hero = await searchHero(heroName);
+    renderHero(hero);
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
-function searchHero(heroInfo) {
+async function searchHero(heroInfo) {
   const baseUrl = 'https://superhero-search.p.rapidapi.com/api/';
   const PARAMS = new URLSearchParams({ hero: heroInfo });
   const url = `${baseUrl}?${PARAMS}`;
@@ -25,13 +25,16 @@ function searchHero(heroInfo) {
       'X-RapidAPI-Host': 'superhero-search.p.rapidapi.com',
     },
   };
+  try {
+    const response = await fetch(url, options);
 
-  return fetch(url, options).then(response => {
     if (!response.ok) {
       throw new Error();
     }
     return response.json();
-  });
+  } catch {
+    console.log(err);
+  }
 }
 
 function renderHero({ name, biography: { fullName }, images: { lg } }) {

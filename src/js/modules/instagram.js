@@ -3,7 +3,7 @@ const refs = {
   searchInstagramEl: document.querySelector('.js-search-form[data-id="6"]'),
 };
 
-function searchInstagram(userName) {
+async function searchInstagram(userName) {
   const baseUrl = `https://instagram191.p.rapidapi.com/user/details-by-username/`;
   const options = {
     headers: {
@@ -16,7 +16,8 @@ function searchInstagram(userName) {
   });
   const url = `${baseUrl}?${newParam}`;
 
-  return fetch(url, options).then(response => response.json());
+  const response = await fetch(url, options);
+  return response.json();
 }
 
 function renderIstagramCard({ biography, full_name }) {
