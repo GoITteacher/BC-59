@@ -12,18 +12,17 @@ export class BooksApi2 {
   static baseUrl = 'http://localhost:3000';
   static endPoint = '/books';
 
-  getBooks() {
+  async getBooks() {
     const url = `${BooksApi.baseUrl}${BooksApi.endPoint}`;
-    return fetch(url)
-      .then(response => {
-        return response.json();
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    try {
+      const response = await fetch(url);
+      return response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  createBook(book) {
+  async createBook(book) {
     const url = `${BooksApi.baseUrl}${BooksApi.endPoint}`;
     const options = {
       method: 'POST',
@@ -32,10 +31,14 @@ export class BooksApi2 {
       },
       body: JSON.stringify(book),
     };
-
-    return fetch(url, options).then(response => response.json());
+    try {
+      const response = await fetch(url, options);
+      return response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
-  updateBook({ id, ...book }) {
+  async updateBook({ id, ...book }) {
     const url = `${BooksApi.baseUrl}${BooksApi.endPoint}/${id}`;
     const options = {
       method: 'PATCH',
@@ -44,10 +47,14 @@ export class BooksApi2 {
       },
       body: JSON.stringify(book),
     };
-
-    return fetch(url, options).then(response => response.json());
+    try {
+      const response = await fetch(url, options);
+      return response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
-  resetBook({ id, ...book }) {
+  async resetBook({ id, ...book }) {
     const url = `${BooksApi.baseUrl}${BooksApi.endPoint}/${id}`;
     const options = {
       method: 'PUT',
@@ -56,8 +63,12 @@ export class BooksApi2 {
       },
       body: JSON.stringify(book),
     };
-
-    return fetch(url, options).then(response => response.json());
+    try {
+      const response = await fetch(url, options);
+      return response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
   deleteBook(id) {
     const url = `${BooksApi.baseUrl}${BooksApi.endPoint}/${id}`;

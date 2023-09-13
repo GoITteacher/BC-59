@@ -7,6 +7,7 @@ const refs = {
   updateFormEl: document.querySelector('.js-update-form'),
   deleteFormEl: document.querySelector('.js-delete-form'),
 };
+
 const booksApi = new BooksApi();
 // =========================================
 refs.createFormEl.addEventListener('submit', onCreateFormSubmit);
@@ -14,7 +15,7 @@ refs.resetFormEl.addEventListener('submit', onResetFormSubmit);
 refs.updateFormEl.addEventListener('submit', onUpdateFormSubmit);
 refs.deleteFormEl.addEventListener('submit', onDeleteFormSubmit);
 
-function onCreateFormSubmit(event) {
+async function onCreateFormSubmit(event) {
   event.preventDefault();
 
   const { bookTitle, bookAuthor, bookDesc } = event.target.elements;
@@ -29,13 +30,16 @@ function onCreateFormSubmit(event) {
     desc,
   };
 
-  booksApi.createBook(book).then(createdBook => {
+  try {
+    const createdBook = await booksApi.createBook(book);
     const markup = templateBook(createdBook);
     refs.listEl.insertAdjacentHTML('beforeend', markup);
-  });
-  event.target.reset();
+    event.target.reset();
+  } catch (err) {
+    console.log(err);
+  }
 }
-function onUpdateFormSubmit(event) {
+async function onUpdateFormSubmit(event) {
   event.preventDefault();
   const book = {};
   const formData = new FormData(event.target);
@@ -48,18 +52,18 @@ function onUpdateFormSubmit(event) {
     book[key] = value;
   });
 
-  booksApi
-    .updateBook(book)
-    .then(book => {
-      const markup = templateBook(book);
-      const oldBookEl = refs.listEl.querySelector(`[data-id="${book.id}"]`);
-      oldBookEl.insertAdjacentHTML('beforebegin', markup);
-      oldBookEl.remove();
-    })
-    .catch(err => console.log(err));
+  try {
+    const updatedBook = await booksApi.updateBook(book);
+    const markup = templateBook(updatedBook);
+    const oldBookEl = refs.listEl.querySelector(`[data-id="${book.id}"]`);
+    oldBookEl.insertAdjacentHTML('beforebegin', markup);
+    oldBookEl.remove();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-function onResetFormSubmit(event) {
+async function onResetFormSubmit(event) {
   event.preventDefault();
 
   const book = {};
@@ -70,21 +74,27 @@ function onResetFormSubmit(event) {
     book[key] = value;
   });
 
-  booksApi.resetBook(book).then(newBook => {
+  try {
+    const newBook = await booksApi.resetBook(book);
     const markup = templateBook(newBook);
     const oldBookEl = refs.listEl.querySelector(`[data-id="${book.id}"]`);
     oldBookEl.insertAdjacentHTML('afterend', markup);
     oldBookEl.remove();
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function onDeleteFormSubmit(event) {
+async function onDeleteFormSubmit(event) {
   event.preventDefault();
   const id = event.target.elements.bookId.value;
-  booksApi.deleteBook(id).then(() => {
+  try {
+    await booksApi.deleteBook(id);
     const oldEl = refs.listEl.querySelector(`[data-id="${id}"]`);
     oldEl.remove();
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // =========================================
